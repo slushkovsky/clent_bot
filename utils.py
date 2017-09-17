@@ -1,6 +1,9 @@
 import logging
+from functools import wraps
 
 from telegram import MessageEntity
+
+import db
 
 
 def get_cmd_arg(update, strip=True): 
@@ -24,3 +27,13 @@ def get_cmd_arg(update, strip=True):
 
     logging.error('Unexpected exit of function')
     return None
+
+def from_known_user(f): 
+    @wraps(f) 
+    def wrapper(bot, update): 
+        __session = db.Session()
+        user = __session.query(db.User).filter_by(telegram_id=update.message.from_user.id).one() 
+
+        return f(user, update) 
+
+    return wrapper   

@@ -7,13 +7,9 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 import config
 from funcs.parsing import cmd_list_parsers, cmd_add_parser, cmd_remove_parser, on_forwarded
 from funcs.rss import cmd_list_rss, cmd_add_rss, cmd_remove_rss
+from funcs.start import cmd_start 
+from funcs.help import cmd_help
 
-
-def cmd_help(bot, update): 
-    bot.send_message(update.message.chat_id, text=config.MSG_HELP) 
-
-def cmd_start(bot, update):
-    bot.send_message(update.message.chat_id, text=config.MSG_START) 
 
 if __name__ == '__main__': 
     bot = Updater(token=config.BOT_TOKEN)
